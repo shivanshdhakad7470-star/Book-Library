@@ -1,35 +1,43 @@
-/* BOOK DATA */
+/* =========================
+BOOKHUB FRONTEND SCRIPT
+========================= */
 
-const books = [
+/* BACKEND API */
+
+const API = "https://book-library-3.onrender.com/api"
+
+/* FALLBACK BOOK DATA */
+
+let books = [
 {
- title:"JavaScript Basics",
- category:"Programming",
- img:"https://images.unsplash.com/photo-1512820790803-83ca734da794"
+title:"JavaScript Basics",
+category:"Programming",
+img:"https://images.unsplash.com/photo-1512820790803-83ca734da794"
 },
 {
- title:"React Guide",
- category:"Programming",
- img:"https://images.unsplash.com/photo-1524995997946-a1c2e315a42f"
+title:"React Guide",
+category:"Programming",
+img:"https://images.unsplash.com/photo-1524995997946-a1c2e315a42f"
 },
 {
- title:"Clean Code",
- category:"Programming",
- img:"https://images.unsplash.com/photo-1495446815901-a7297e633e8d"
+title:"Clean Code",
+category:"Programming",
+img:"https://images.unsplash.com/photo-1495446815901-a7297e633e8d"
 },
 {
- title:"Node.js Guide",
- category:"Programming",
- img:"https://images.unsplash.com/photo-1524578271613-d550eacf6090"
+title:"Node.js Guide",
+category:"Programming",
+img:"https://images.unsplash.com/photo-1524578271613-d550eacf6090"
 },
 {
- title:"Motivation Book",
- category:"Motivation",
- img:"https://images.unsplash.com/photo-1519681393784-d120267933ba"
+title:"Motivation Book",
+category:"Motivation",
+img:"https://images.unsplash.com/photo-1519681393784-d120267933ba"
 },
 {
- title:"Science World",
- category:"Science",
- img:"https://images.unsplash.com/photo-1507842217343-583bb7270b66"
+title:"Science World",
+category:"Science",
+img:"https://images.unsplash.com/photo-1507842217343-583bb7270b66"
 }
 ]
 
@@ -39,20 +47,55 @@ const grid = document.getElementById("bookGrid")
 const searchInput = document.getElementById("searchInput")
 const suggestionsBox = document.getElementById("suggestions")
 
-/* DISPLAY BOOKS */
+/* =========================
+LOAD BOOKS FROM BACKEND
+========================= */
+
+async function loadBooks(){
+
+try{
+
+const res = await fetch(API + "/books")
+const data = await res.json()
+
+if(data.length > 0){
+books = data
+}
+
+displayBooks(books)
+
+}catch(err){
+
+console.log("Using fallback books")
+
+displayBooks(books)
+
+}
+
+}
+
+loadBooks()
+
+/* =========================
+DISPLAY BOOKS
+========================= */
 
 function displayBooks(bookList){
 
- grid.innerHTML=""
+grid.innerHTML=""
 
- bookList.forEach(book=>{
+bookList.forEach(book=>{
 
- const card=document.createElement("div")
- card.className="book-card"
+const card=document.createElement("div")
+card.className="book-card"
 
- card.innerHTML=`
+const image = book.coverImage
+? API + "/uploads/" + book.coverImage
+: book.img
 
- <img src="${book.img}">
+card.innerHTML=`
+
+ <img src="${image}">
 
  <div class="book-info">
  <h3>${book.title}</h3>
@@ -64,103 +107,116 @@ function displayBooks(bookList){
  <span class="favorite" onclick="toggleFavorite(this)">🤍</span>
  </div>
 
- `
+`
 
- grid.appendChild(card)
-
- })
-
-}
-
-displayBooks(books)
-
-/* SEARCH FILTER */
-
-searchInput.addEventListener("input",()=>{
-
- const value = searchInput.value.toLowerCase()
-
- const filtered = books.filter(book =>
- book.title.toLowerCase().includes(value)
- )
-
- displayBooks(filtered)
-
- showSuggestions(value)
+grid.appendChild(card)
 
 })
 
-/* SEARCH SUGGESTIONS */
+}
+
+/* =========================
+SEARCH
+========================= */
+
+searchInput.addEventListener("input",()=>{
+
+const value = searchInput.value.toLowerCase()
+
+const filtered = books.filter(book =>
+book.title.toLowerCase().includes(value)
+)
+
+displayBooks(filtered)
+
+showSuggestions(value)
+
+})
+
+/* =========================
+SEARCH SUGGESTIONS
+========================= */
 
 function showSuggestions(value){
 
- suggestionsBox.innerHTML=""
+suggestionsBox.innerHTML=""
 
- if(value===""){
-  suggestionsBox.style.display="none"
-  return
- }
+if(value===""){
+suggestionsBox.style.display="none"
+return
+}
 
- const filtered = books.filter(book =>
- book.title.toLowerCase().includes(value)
- )
+const filtered = books.filter(book =>
+book.title.toLowerCase().includes(value)
+)
 
- filtered.forEach(book=>{
+filtered.forEach(book=>{
 
- const div=document.createElement("div")
- div.className="suggestion-item"
- div.textContent=book.title
+const div=document.createElement("div")
+div.className="suggestion-item"
+div.textContent=book.title
 
- div.onclick=()=>{
-  searchInput.value=book.title
-  suggestionsBox.style.display="none"
-  displayBooks([book])
- }
+div.onclick=()=>{
 
- suggestionsBox.appendChild(div)
+searchInput.value=book.title
+suggestionsBox.style.display="none"
 
- })
-
- suggestionsBox.style.display="block"
+displayBooks([book])
 
 }
 
-/* CATEGORY FILTER */
+suggestionsBox.appendChild(div)
+
+})
+
+suggestionsBox.style.display="block"
+
+}
+
+/* =========================
+CATEGORY FILTER
+========================= */
 
 const categories = document.querySelectorAll(".category")
 
 categories.forEach(cat=>{
 
- cat.addEventListener("click",()=>{
+cat.addEventListener("click",()=>{
 
- const selected = cat.dataset.category
+const selected = cat.dataset.category
 
- const filtered = books.filter(book =>
- book.category === selected
- )
+const filtered = books.filter(book =>
+book.category === selected
+)
 
- displayBooks(filtered)
-
- })
+displayBooks(filtered)
 
 })
 
-/* OPEN BOOK */
+})
+
+/* =========================
+OPEN BOOK
+========================= */
 
 function openBook(){
- window.location.href="reader.html"
+window.location.href="reader.html"
 }
 
-/* FAVORITE BUTTON */
+/* =========================
+FAVORITE
+========================= */
 
 function toggleFavorite(el){
- el.textContent = el.textContent==="🤍" ? "❤️" : "🤍"
+el.textContent = el.textContent==="🤍" ? "❤️" : "🤍"
 }
 
-/* DARK MODE */
+/* =========================
+DARK MODE
+========================= */
 
 const toggle=document.getElementById("darkToggle")
 
 toggle.onclick=()=>{
- document.body.classList.toggle("dark")
+document.body.classList.toggle("dark")
 }

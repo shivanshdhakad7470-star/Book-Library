@@ -1,0 +1,87 @@
+body{
+ background:#f5f5f5;
+ font-family:Arial, Helvetica, sans-serif;
+}
+
+/* CONTAINER */
+
+.auth-container{
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+}
+
+/* BOX */
+
+.auth-box{
+ width:360px;
+ background:white;
+ padding:30px;
+ border-radius:10px;
+ box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TITLE */
+
+.auth-box h2{
+ text-align:center;
+ margin-bottom:20px;
+}
+
+/* INPUT */
+
+.auth-box input{
+ width:100%;
+ padding:10px;
+ margin-bottom:15px;
+ border:1px solid #ddd;
+ border-radius:5px;
+}
+
+/* LOGIN BUTTON */
+
+.login-btn{
+ width:100%;
+ padding:10px;
+ background:#111;
+ color:white;
+ border:none;
+ border-radius:5px;
+ cursor:pointer;
+}
+
+/* DIVIDER */
+
+.divider{
+ text-align:center;
+ margin:15px 0;
+ color:#666;
+}
+
+/* GOOGLE BUTTON */
+
+.google-btn{
+ width:100%;
+ padding:10px;
+ background:white;
+ border:1px solid #ddd;
+ border-radius:5px;
+ cursor:pointer;
+ font-weight:bold;
+}
+
+/* LINKS */
+
+.auth-box p{
+ text-align:center;
+ margin-top:15px;
+}
+
+.home-link{
+ display:block;
+ text-align:center;
+ margin-top:10px;
+ text-decoration:none;
+ color:#111;
+}

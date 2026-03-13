@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BookHub - Online Book Library</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">📚 BookHub</div>
+<div class="search-box">
+
+<input type="text" id="searchInput" placeholder="Search books...">
+
+<div id="suggestions" class="suggestions"></div>
+
+</div>
+
+<div class="nav-links">
+<a href="login.html">Login</a>
+<a href="signup.html">Signup</a>
+<a href="admin.html">Admin</a>
+<button class="dark-btn" id="darkToggle">🌙</button>
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Read Books Online</h1>
+<p>Search and read thousands of books for free</p>
+
+<input type="text" placeholder="Search your favorite book">
+
+</section>
+
+<!-- CATEGORIES -->
+
+<section class="categories">
+
+<h2>Categories</h2>
+
+<div class="category-list">
+
+<div class="category" data-category="Programming">Programming</div>
+<div class="category" data-category="Story">Story</div>
+<div class="category" data-category="Motivation">Motivation</div>
+<div class="category" data-category="Science">Science</div>
+<div class="category" data-category="History">History</div>
+<div class="category" data-category="Technology">Technology</div>
+
+</div>
+
+</section>
+
+<!-- BOOKS -->
+
+<section class="books">
+
+<h2>Popular Books</h2>
+
+<div class="book-grid" id="bookGrid"></div>
+
+</section>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<p>© 2026 BookHub - Online Library</p>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+
+/* OPEN BOOK */
+
+function openBook(){
+ window.location.href="reader.html"
+}
+
+</script>
+
+</body>
+</html>

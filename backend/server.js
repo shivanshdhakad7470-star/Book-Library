@@ -17,7 +17,7 @@ connectDB();
 
 app.use("/api", authRoutes);
 app.use("/api/books", bookRoutes);
-
+app.use("/uploads", express.static("uploads"));
 /* ROOT TEST ROUTE */
 
 app.get("/", (req, res) => {
